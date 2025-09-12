@@ -50,6 +50,7 @@
 #include "app_log.h"
 #include "blinky.h"
 #include "wifi_app.h"
+#include "wifi_ota_manager.h"
 
 // WLAN include file for configuration
 
@@ -414,6 +415,26 @@ void wifi_app_task()
       case WIFI_APP_IPCONFIG_DONE_STATE: {
         wifi_app_clear_event(WIFI_APP_IPCONFIG_DONE_STATE);
 
+        // Initialize OTA manager after successful WiFi connection and IP configuration
+        sl_status_t ota_init_status = catcollar_ota_init();
+        if (ota_init_status == SL_STATUS_OK) {
+          LOG_PRINT("OTA manager initialized successfully\r\n");
+          
+          // Start periodic OTA version checks
+          catcollar_ota_start_periodic_check();
+          
+          // Perform initial OTA check after WiFi connection
+          catcollar_ota_check_for_updates();
+          
+          // Check if update is available and start it automatically
+          if (catcollar_ota_get_status() == OTA_STATUS_UPDATE_AVAILABLE) {
+            LOG_PRINT("Firmware update available, starting OTA update...\r\n");
+            catcollar_ota_start_update();
+          }
+        } else {
+          LOG_PRINT("Failed to initialize OTA manager: 0x%lX\r\n", ota_init_status);
+        }
+
         osSemaphoreRelease(wlan_thread_sem);
         LOG_PRINT("WIFI App IPCONFIG Done State\r\n");
       } break;
@@ -544,6 +565,28 @@ void wifi_connect_test(void)
       print_sl_ip_address(&ip);
       catcollar_wifi_connection_set_state(CATCOLLAR_WIFI_CONNECTED); 
       app_log_info("Connected to test access point successfully\r\n");
+      
+      // Initialize and check for OTA updates after successful connection
+      sl_status_t ota_init_status = catcollar_ota_init();
+      if (ota_init_status == SL_STATUS_OK) {
+        app_log_info("OTA manager initialized successfully\r\n");
+        
+        // Start periodic OTA version checks
+        catcollar_ota_start_periodic_check();
+        
+        // Perform initial OTA check after WiFi connection
+        catcollar_ota_check_for_updates();
+        
+        // Check if update is available and start it automatically
+        if (catcollar_ota_get_status() == OTA_STATUS_UPDATE_AVAILABLE) {
+          app_log_info("Firmware update available, starting OTA update...\r\n");
+          catcollar_ota_start_update();
+        } else {
+          app_log_info("Firmware is up to date\r\n");
+        }
+      } else {
+        app_log_error("Failed to initialize OTA manager: 0x%lx\r\n", ota_init_status);
+      }
     }
   }
 }

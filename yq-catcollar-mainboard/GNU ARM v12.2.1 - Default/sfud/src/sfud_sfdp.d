@@ -1,15 +1,15 @@
 sfud/src/sfud_sfdp.o: ../sfud/src/sfud_sfdp.c \
- F:\Project\21.CatCollar\soft_dev\yq-catcollar-mainboard\sfud\inc/sfud.h \
- F:\Project\21.CatCollar\soft_dev\yq-catcollar-mainboard\sfud\inc/sfud_def.h \
- F:\Project\21.CatCollar\soft_dev\yq-catcollar-mainboard\sfud\inc/sfud_cfg.h \
- F:\Project\21.CatCollar\soft_dev\yq-catcollar-mainboard\sfud\inc/sfud_flash_def.h \
- F:\Project\21.CatCollar\soft_dev\yq-catcollar-mainboard\app_log/app_log.h \
- F:\Project\21.CatCollar\soft_dev\yq-catcollar-mainboard\app_log/app_log_config.h \
- F:\Project\21.CatCollar\soft_dev\yq-catcollar-mainboard\simplicity_sdk_2025.6.0\platform\common\inc/sl_status.h
-F:\Project\21.CatCollar\soft_dev\yq-catcollar-mainboard\sfud\inc/sfud.h:
-F:\Project\21.CatCollar\soft_dev\yq-catcollar-mainboard\sfud\inc/sfud_def.h:
-F:\Project\21.CatCollar\soft_dev\yq-catcollar-mainboard\sfud\inc/sfud_cfg.h:
-F:\Project\21.CatCollar\soft_dev\yq-catcollar-mainboard\sfud\inc/sfud_flash_def.h:
-F:\Project\21.CatCollar\soft_dev\yq-catcollar-mainboard\app_log/app_log.h:
-F:\Project\21.CatCollar\soft_dev\yq-catcollar-mainboard\app_log/app_log_config.h:
-F:\Project\21.CatCollar\soft_dev\yq-catcollar-mainboard\simplicity_sdk_2025.6.0\platform\common\inc/sl_status.h:
+ D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\sfud\inc/sfud.h \
+ D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\sfud\inc/sfud_def.h \
+ D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\sfud\inc/sfud_cfg.h \
+ D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\sfud\inc/sfud_flash_def.h \
+ D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\app_log/app_log.h \
+ D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\app_log/app_log_config.h \
+ D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\simplicity_sdk_2025.6.0\platform\common\inc/sl_status.h
+D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\sfud\inc/sfud.h:
+D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\sfud\inc/sfud_def.h:
+D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\sfud\inc/sfud_cfg.h:
+D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\sfud\inc/sfud_flash_def.h:
+D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\app_log/app_log.h:
+D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\app_log/app_log_config.h:
+D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\simplicity_sdk_2025.6.0\platform\common\inc/sl_status.h:

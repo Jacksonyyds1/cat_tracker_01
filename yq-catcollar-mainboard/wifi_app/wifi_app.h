@@ -22,4 +22,7 @@ void catcollar_wifi_connection_set_state(catcollar_wifi_connection_state_t state
 /// test
 void wifi_connect_test(void);
 
+// OTA functionality
+#include "wifi_ota_manager.h"
+
 #endif // WIFI_APP_H

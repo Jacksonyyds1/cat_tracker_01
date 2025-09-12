@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "*.json": "jsonc",
+        "sl_wifi_callback_framework.h": "c",
+        "wifi_ota_config.h": "c",
+        "wifi_ota_manager.h": "c",
+        "sl_status.h": "c"
+    }
+}

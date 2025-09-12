@@ -1,5 +1,5 @@
 main.o: ../main.c \
- F:\Project\21.CatCollar\soft_dev\yq-catcollar-mainboard\simplicity_sdk_2025.6.0\platform\service\sl_main\inc/sl_main_init.h \
- F:\Project\21.CatCollar\soft_dev\yq-catcollar-mainboard\simplicity_sdk_2025.6.0\platform\service\sl_main\inc/sl_main_kernel.h
-F:\Project\21.CatCollar\soft_dev\yq-catcollar-mainboard\simplicity_sdk_2025.6.0\platform\service\sl_main\inc/sl_main_init.h:
-F:\Project\21.CatCollar\soft_dev\yq-catcollar-mainboard\simplicity_sdk_2025.6.0\platform\service\sl_main\inc/sl_main_kernel.h:
+ D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\simplicity_sdk_2025.6.0\platform\service\sl_main\inc/sl_main_init.h \
+ D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\simplicity_sdk_2025.6.0\platform\service\sl_main\inc/sl_main_kernel.h
+D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\simplicity_sdk_2025.6.0\platform\service\sl_main\inc/sl_main_init.h:
+D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\simplicity_sdk_2025.6.0\platform\service\sl_main\inc/sl_main_kernel.h:
