@@ -1,108 +1,35 @@
 #ifndef WIFI_OTA_MANAGER_H
 #define WIFI_OTA_MANAGER_H
 
-#include "wifi_ota_config.h"
 #include "sl_status.h"
+#include "sl_wifi_types.h"
+#include "wifi_ota_config.h"
 
-/**
- * @brief Initialize the OTA manager with default configuration
- * @return SL_STATUS_OK on success, error code otherwise
- */
-sl_status_t catcollar_ota_init(void);
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-/**
- * @brief Initialize the OTA manager with custom configuration
- * @param config Pointer to custom OTA configuration
- * @return SL_STATUS_OK on success, error code otherwise
- */
-sl_status_t catcollar_ota_init_with_config(catcollar_ota_config_t *config);
+// Function declarations
+sl_status_t wifi_ota_init(void);
+sl_status_t wifi_ota_start_update(void);
+sl_status_t wifi_ota_set_progress_callback(wifi_ota_progress_callback_t callback);
+sl_status_t wifi_ota_set_complete_callback(wifi_ota_complete_callback_t callback);
+wifi_ota_status_t wifi_ota_get_status(void);
+sl_status_t wifi_ota_cancel(void);
 
-/**
- * @brief Check for available firmware updates from AWS S3 ap-east-1
- * @return SL_STATUS_OK on success, error code otherwise
- */
-sl_status_t catcollar_ota_check_for_updates(void);
+// Internal functions
+sl_status_t wifi_ota_load_certificates(void);
+sl_status_t wifi_ota_dns_resolve(char *hostname, char *ip_buffer);
+sl_status_t wifi_ota_download_firmware(void);
 
-/**
- * @brief Start the OTA firmware update process
- * @return SL_STATUS_OK on success, error code otherwise
- */
-sl_status_t catcollar_ota_start_update(void);
+// Callback handlers
+sl_status_t wifi_ota_fw_update_response_handler(sl_wifi_event_t event,
+                                               uint16_t *data,
+                                               uint32_t data_length,
+                                               void *arg);
 
-/**
- * @brief Start the OTA firmware update process with retry mechanism
- * @param max_retries Maximum number of retry attempts
- * @return SL_STATUS_OK on success, error code otherwise
- */
-sl_status_t catcollar_ota_start_update_with_retry(uint8_t max_retries);
-
-/**
- * @brief Get the current OTA state
- * @return Current OTA state
- */
-catcollar_ota_state_t catcollar_ota_get_state(void);
-
-/**
- * @brief Get the last OTA status
- * @return Last OTA status
- */
-catcollar_ota_status_t catcollar_ota_get_status(void);
-
-/**
- * @brief Get the current firmware version
- * @return Current firmware version structure
- */
-catcollar_firmware_version_t catcollar_get_current_version(void);
-
-/**
- * @brief Start periodic OTA version checking (every 24 hours)
- * @return SL_STATUS_OK on success, error code otherwise
- */
-sl_status_t catcollar_ota_start_periodic_check(void);
-
-/**
- * @brief Stop periodic OTA version checking
- * @return SL_STATUS_OK on success, error code otherwise
- */
-sl_status_t catcollar_ota_stop_periodic_check(void);
-
-/**
- * @brief Abort ongoing OTA operation
- * @return SL_STATUS_OK on success, error code otherwise
- */
-sl_status_t catcollar_ota_abort(void);
-
-/**
- * @brief Get the current download progress percentage (0-100)
- * @return Progress percentage
- */
-uint8_t catcollar_ota_get_progress_percentage(void);
-
-/**
- * @brief Set progress callback for OTA download monitoring
- * @param callback Function pointer to progress callback
- * @return SL_STATUS_OK on success, error code otherwise
- */
-sl_status_t catcollar_ota_set_progress_callback(catcollar_ota_progress_callback_t callback);
-
-/**
- * @brief Get readable string representation of OTA state
- * @param state OTA state value
- * @return String representation of the state
- */
-const char* catcollar_ota_state_to_string(catcollar_ota_state_t state);
-
-/**
- * @brief Get readable string representation of OTA status
- * @param status OTA status value
- * @return String representation of the status
- */
-const char* catcollar_ota_status_to_string(catcollar_ota_status_t status);
-
-/**
- * @brief Force check for updates and download if available (for manual trigger)
- * @return SL_STATUS_OK on success, error code otherwise
- */
-sl_status_t catcollar_ota_check_and_update(void);
+#ifdef __cplusplus
+}
+#endif
 
 #endif // WIFI_OTA_MANAGER_H
