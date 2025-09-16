@@ -70,6 +70,9 @@
 #include "ota_test.h"
 #include "smart_ota.h"
 
+#include "simplified_version_downloader.h"
+#include "version_manager.h"
+
 // #define CATCOLLAR_DEBUG
 
 static int32_t prev_heap = -1;
@@ -266,6 +269,7 @@ void application(void *argument)
     print_firmware_version(&version);
   }
 
+
   // status = sl_net_up(SL_NET_WIFI_CLIENT_INTERFACE, SL_NET_DEFAULT_WIFI_CLIENT_PROFILE_ID);
   // if (status != SL_STATUS_OK) {
   //   app_log_error("Failed to bring Wi-Fi client interface up: 0x%lx\r\n", status);
@@ -344,7 +348,55 @@ LOG_HEAP_DELTA(5);
 
   wifi_connect_test();
 
-  // 检查WiFi连接状态并启动智能OTA检查
+  // Automatic version check and OTA update after WiFi connection
+  app_log_info("\\r\\n=== Automatic Version Check and OTA Update ===\\r\\n");
+  osDelay(3000); // Wait 3 seconds for WiFi to stabilize
+
+  // Initialize version manager
+  sl_status_t version_status = version_manager_init();
+  if (version_status == SL_STATUS_OK) {
+    app_log_info("Version manager initialized successfully\\r\\n");
+
+    // Check for updates with callback
+    version_status = version_manager_check_for_updates(NULL);
+    if (version_status == SL_STATUS_OK) {
+      app_log_info("Version check completed successfully\\r\\n");
+
+      // Check if update is needed
+      if (version_manager_should_update()) {
+        app_log_info("\\r\\n*** NEW VERSION AVAILABLE - STARTING OTA UPDATE ***\\r\\n");
+
+        // Enable one of these options to start real OTA update:
+
+        // Option 1: Use existing WiFi OTA manager
+        // sl_status_t ota_status = wifi_ota_start_update();
+        // if (ota_status == SL_STATUS_OK) {
+        //     app_log_info("WiFi OTA update started successfully\\r\\n");
+        // } else {
+        //     app_log_error("WiFi OTA update failed: 0x%lx\\r\\n", ota_status);
+        // }
+
+        // Option 2: Use smart OTA system
+        // sl_status_t smart_status = smart_ota_check_and_update();
+        // if (smart_status == SL_STATUS_OK) {
+        //     app_log_info("Smart OTA update started successfully\\r\\n");
+        // } else {
+        //     app_log_error("Smart OTA update failed: 0x%lx\\r\\n", smart_status);
+        // }
+
+        app_log_info("*** OTA update would start here ***\\r\\n");
+        app_log_warning("Uncomment above code to enable real OTA update\\r\\n");
+      } else {
+        app_log_info("Device is up to date - no OTA update needed\\r\\n");
+      }
+    } else {
+      app_log_error("Version check failed: 0x%lx\\r\\n", version_status);
+    }
+  } else {
+    app_log_error("Version manager initialization failed: 0x%lx\\r\\n", version_status);
+  }
+
+/*   // 检查WiFi连接状态并启动智能OTA检查
   if (catcollar_wifi_connection_get_state() == CATCOLLAR_WIFI_CONNECTED) {
     app_log_info("WiFi connected successfully, starting smart OTA check in 3 seconds...\r\n");
     osDelay(3000); // 等待3秒让WiFi连接完全稳定
@@ -364,8 +416,8 @@ LOG_HEAP_DELTA(5);
     }
   } else {
     app_log_warning("WiFi not connected, skipping OTA check\r\n");
-  }
-
+  } */
+  
   // https_upload_test();
 
 #ifdef CATCOLLAR_DEBUG   // 调试时打开，监测栈空间剩余量

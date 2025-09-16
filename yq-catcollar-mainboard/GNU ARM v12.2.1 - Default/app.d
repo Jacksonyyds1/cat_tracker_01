@@ -124,6 +124,8 @@ app.o: ../app.c \
  D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\wifi_app/ota_test.h \
  D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\wifi_app/smart_ota.h \
  D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\wifi_app/version_manager.h \
+ D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\wifi_app/simplified_version_downloader.h \
+ D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\wifi_app/version_manager.h \
  D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\wiseconnect3_sdk_3.5.0\components\service\network_manager\inc/sl_net.h \
  D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\wiseconnect3_sdk_3.5.0\components\service\network_manager\inc/sl_net_types.h \
  D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\wiseconnect3_sdk_3.5.0\components\service\network_manager\inc/sl_net_constants.h \
@@ -252,6 +254,8 @@ D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\wifi_app/simple_ota.h:
 D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\wifi_app/wifi_ota_config.h:
 D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\wifi_app/ota_test.h:
 D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\wifi_app/smart_ota.h:
+D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\wifi_app/version_manager.h:
+D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\wifi_app/simplified_version_downloader.h:
 D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\wifi_app/version_manager.h:
 D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\wiseconnect3_sdk_3.5.0\components\service\network_manager\inc/sl_net.h:
 D:\Cat_collar\cat_collar_code\yq-catcollar-mainboard\wiseconnect3_sdk_3.5.0\components\service\network_manager\inc/sl_net_types.h:

@@ -1,7 +1,7 @@
 #include "version_manager.h"
 #include "wifi_ota_config.h"
-#include "common.h"  // 添加这个include来获取应用版本定义
-#include "simplified_version_downloader.h"  // 使用简化的下载器
+#include "common.h"
+#include "simplified_version_downloader.h"
 #include "sl_wifi.h"
 #include "app_log.h"
 #include "cmsis_os2.h"
@@ -49,14 +49,11 @@ sl_status_t version_manager_get_current_version(firmware_version_t *version)
     version->patch = CATCOLLAR_APPLICATION_PATCH_VERSION;
     
     // 对于build号，可以使用编译时间或其他标识
-    // 这里使用一个基于日期的简单计算
-    // 您也可以在构建系统中定义一个BUILD_NUMBER宏
     #ifdef BUILD_NUMBER
         version->build = BUILD_NUMBER;
     #else
-        // 使用简单的日期计算作为build号 (YYYYMMDD格式的简化版本)
-        // 您可以根据需要修改这个逻辑
-        version->build = CATCOLLAR_FW_VERSION; // 或者使用其他逻辑
+        // 使用简单的日期计算作为build号
+        version->build = CATCOLLAR_FW_VERSION;
     #endif
 
     // Update static current version
@@ -68,7 +65,7 @@ sl_status_t version_manager_get_current_version(firmware_version_t *version)
     return SL_STATUS_OK;
 }
 
-// Parse version string "2.15.0.25" into firmware_version_t
+// Parse version string "1.1.1" into firmware_version_t
 static sl_status_t parse_version_string(const char *version_str, firmware_version_t *version)
 {
     if (!version_str || !version) {
@@ -82,91 +79,24 @@ static sl_status_t parse_version_string(const char *version_str, firmware_versio
 
     // Remove trailing whitespace/newlines
     int len = strlen(clean_version);
-    while (len > 0 && (clean_version[len-1] == '\r' || clean_version[len-1] == '\n' || 
+    while (len > 0 && (clean_version[len-1] == '\r' || clean_version[len-1] == '\n' ||
                        clean_version[len-1] == ' ' || clean_version[len-1] == '\t')) {
         clean_version[--len] = '\0';
     }
 
-    int major, minor, patch, build;
-    int parsed = sscanf(clean_version, "%d.%d.%d.%d", &major, &minor, &patch, &build);
+    // Support 3-part version format (major.minor.patch)
+    int major, minor, patch;
+    int parsed = sscanf(clean_version, "%d.%d.%d", &major, &minor, &patch);
 
-    if (parsed != 4) {
-        app_log_error("Invalid version format: '%s' (parsed %d fields)\r\n", clean_version, parsed);
+    if (parsed != 3) {
+        app_log_error("Invalid version format: '%s' (expected major.minor.patch, got %d fields)\r\n", clean_version, parsed);
         return SL_STATUS_INVALID_PARAMETER;
     }
 
     version->major = (uint8_t)major;
     version->minor = (uint8_t)minor;
     version->patch = (uint8_t)patch;
-    version->build = (uint16_t)build;
-
-    return SL_STATUS_OK;
-}
-
-// Parse version string "2.15.0.25" into firmware_version_t
-static sl_status_t parse_version_string(const char *version_str, firmware_version_t *version)INET, SOCK_STREAM, IPPROTO_TCP);
-    if (client_socket < 0) {
-        app_log_error("Socket creation failed\r\n");
-        return SL_STATUS_FAIL;
-    }
-
-    // Setup server address
-    server_addr.sin_family = AF_INET;
-    server_addr.sin_port = htons(443); // HTTPS port
-    server_addr.sin_addr.s_addr = server_address;
-
-    // Connect to server
-    status = connect(client_socket, (struct sockaddr*)&server_addr, sizeof(server_addr));
-    if (status < 0) {
-        app_log_error("Connection to server failed\r\n");
-        close(client_socket);
-        return SL_STATUS_FAIL;
-    }
-
-    // Prepare HTTP GET request
-    char http_request[512];
-    snprintf(http_request, sizeof(http_request),
-             "GET %s HTTP/1.1\r\n"
-             "Host: %s\r\n"
-             "Connection: close\r\n"
-             "\r\n",
-             VERSION_CHECK_RESOURCE, VERSION_CHECK_HOSTNAME);
-
-    // Send request
-    ssize_t sent = send(client_socket, http_request, strlen(http_request), 0);
-    if (sent < 0) {
-        app_log_error("Failed to send HTTP request\r\n");
-        close(client_socket);
-        return SL_STATUS_FAIL;
-    }
-
-    // Receive response
-    char response[1024] = {0};
-    ssize_t received = recv(client_socket, response, sizeof(response) - 1, 0);
-    close(client_socket);
-
-    if (received <= 0) {
-        app_log_error("Failed to receive HTTP response\r\n");
-        return SL_STATUS_FAIL;
-    }
-
-    // Parse HTTP response to extract version
-    char *body = strstr(response, "\r\n\r\n");
-    if (!body) {
-        app_log_error("Invalid HTTP response format\r\n");
-        return SL_STATUS_FAIL;
-    }
-    body += 4; // Skip "\r\n\r\n"
-
-    // Copy version to buffer
-    strncpy(buffer, body, buffer_size - 1);
-    buffer[buffer_size - 1] = '\0';
-
-    // Remove any trailing newlines
-    int len = strlen(buffer);
-    while (len > 0 && (buffer[len-1] == '\r' || buffer[len-1] == '\n')) {
-        buffer[--len] = '\0';
-    }
+    version->build = 0;  // Default build number for 3-part versions
 
     return SL_STATUS_OK;
 }

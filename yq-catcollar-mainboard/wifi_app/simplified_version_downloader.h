@@ -96,49 +96,7 @@ sl_status_t simplified_test_version_download(void);
 sl_status_t get_remote_version_for_ota(char *version_buffer, size_t buffer_size);
 
 // ========== 内部函数声明（仅供内部使用） ==========
-
-/**
- * @brief DNS解析（内部函数）
- * 
- * 复用wifi_ota_manager.c中的DNS解析逻辑
- * 
- * @param hostname 主机名
- * @param ip_buffer IP地址输出缓冲区
- * @return sl_status_t 状态码
- */
-static sl_status_t simplified_dns_resolve(const char *hostname, char *ip_buffer);
-
-/**
- * @brief 通过Socket下载版本信息（内部函数）
- * 
- * @param server_ip 服务器IP地址
- * @param port 端口号
- * @param hostname 主机名
- * @param resource 资源路径
- * @param version_buffer 版本信息输出缓冲区
- * @param buffer_size 缓冲区大小
- * @return sl_status_t 状态码
- */
-static sl_status_t download_version_via_socket(const char *server_ip,
-                                             uint16_t port,
-                                             const char *hostname,
-                                             const char *resource,
-                                             char *version_buffer,
-                                             size_t buffer_size);
-
-/**
- * @brief 解析HTTP响应提取版本信息（内部函数）
- * 
- * @param response HTTP响应数据
- * @param response_len 响应数据长度
- * @param version_buffer 版本信息输出缓冲区
- * @param buffer_size 缓冲区大小
- * @return sl_status_t 状态码
- */
-static sl_status_t parse_version_from_http_response(const char *response, 
-                                                  size_t response_len,
-                                                  char *version_buffer, 
-                                                  size_t buffer_size);
+// Static functions are not declared in header files - they are internal to the .c file
 
 #ifdef __cplusplus
 }
